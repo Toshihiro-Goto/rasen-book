@@ -1,0 +1,51 @@
+// VSCodeでAtCoderのサンプルケースをサクッとテストする@danpe919
+// https://qiita.com/danpe919/items/7c5697df25fb567f1e71
+{
+    "tasks": [
+        {
+            "label": "download test cases",
+            "type": "process",
+            "command": "bash",
+            "args": [
+                "-c",
+                "test ${input:problemUrl} && rm -rf test/*.in test/*.out && oj d ${input:problemUrl} || true",
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "do oj test",
+            "type": "shell",
+            "command": "oj",
+            "args": [
+                "t",
+                "-c python3 ${file}"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": []
+            // "dependsOn": [
+            //     "download test cases"
+            // ]
+        },
+        {
+            "label": "submit",
+            "type": "process",
+            "command": "oj",
+            "args": [
+                "s",
+                "main.py -y"
+            ],
+            "problemMatcher": []
+        },
+    ],
+    "inputs": [
+        {
+            "id": "problemUrl",
+            "type": "promptString",
+            "description": "URL of Problem",
+        }
+    ],
+    "version": "2.0.0"
+}
